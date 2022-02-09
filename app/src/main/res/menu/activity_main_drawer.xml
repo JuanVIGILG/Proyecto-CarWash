@@ -3,18 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
-    </group>
+    <item android:title="MENU DE NAVEGACION">
+        <menu>
+            <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/home__1_"
+                android:title="INICIO" />
+            <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@drawable/history"
+                android:title="SOLICITAR COTIZACION" />
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@drawable/car"
+                android:title="REGISTRAR UN VEHICULO" />
+            <item
+                android:id="@+id/nav_hom"
+                android:icon="@drawable/checklist"
+                android:title="HISTORIAL DE SERVICIOS" />
+            <item
+                android:id="@+id/nav_ho"
+                android:icon="@drawable/cita"
+                android:title="CITAS" />
+            <item
+                android:id="@+id/nav_homm"
+                android:icon="@drawable/car_wash"
+                android:title="VEHICULOS" />
+
+        </menu>
+
+    </item>
+
+    //Item creado para dar espacio
+            <item
+                android:id="@+id/nav_t"
+                android:title="" />
+
+    // Perfil y cerrar sesion
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@drawable/cita_online"
+        android:title="MI PERFIL" />
+            <item
+                android:id="@+id/nav_homn"
+                android:icon="@drawable/sign_out"
+                android:title="CERRAR SESION" />
+
+
 </menu>
