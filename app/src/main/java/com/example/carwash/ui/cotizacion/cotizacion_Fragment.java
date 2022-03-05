@@ -1,4 +1,4 @@
-package com.example.carwash.ui.slideshow;
+package com.example.carwash.ui.cotizacion;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.carwash.R;
-import com.example.carwash.databinding.FragmentSlideshowBinding;
+import com.example.carwash.databinding.FragmentCotizacionBinding;
 
-public class SlideshowFragment extends Fragment {
+public class cotizacion_Fragment extends Fragment {
 
     private SlideshowViewModel slideshowViewModel;
-    private FragmentSlideshowBinding binding;
+    private FragmentCotizacionBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
                 new ViewModelProvider(this).get(SlideshowViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentCotizacionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;

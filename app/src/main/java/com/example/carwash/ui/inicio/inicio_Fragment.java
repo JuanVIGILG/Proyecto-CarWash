@@ -1,4 +1,4 @@
-package com.example.carwash.ui.gallery;
+package com.example.carwash.ui.inicio;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,25 +11,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.carwash.databinding.FragmentInicioBinding;
 
-import com.example.carwash.R;
-import com.example.carwash.databinding.FragmentGalleryBinding;
+public class inicio_Fragment extends Fragment {
 
-public class GalleryFragment extends Fragment {
-
-    private GalleryViewModel galleryViewModel;
-    private FragmentGalleryBinding binding;
+    private HomeViewModel homeViewModel;
+    private FragmentInicioBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentInicioBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textHome;
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

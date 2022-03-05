@@ -1,4 +1,4 @@
-package com.example.carwash.ui.slideshow;
+package com.example.carwash.ui.cotizacion;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

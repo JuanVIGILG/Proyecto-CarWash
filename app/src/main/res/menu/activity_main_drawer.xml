@@ -6,29 +6,29 @@
     <item android:title="MENU DE NAVEGACION">
         <menu>
             <item
-                android:id="@+id/nav_home"
+                android:id="@+id/nav_inicio"
                 android:icon="@drawable/home__1_"
                 android:title="INICIO" />
             <item
-                android:id="@+id/nav_slideshow"
+                android:id="@+id/nav_cotizacion"
                 android:icon="@drawable/history"
                 android:title="SOLICITAR COTIZACION" />
             <item
-                android:id="@+id/nav_gallery"
+                android:id="@+id/nav_registrarvehiculo"
                 android:icon="@drawable/car"
                 android:title="REGISTRAR UN VEHICULO" />
             <item
-                android:id="@+id/nav_hom"
+                android:id="@+id/nav_historial"
                 android:icon="@drawable/checklist"
                 android:title="HISTORIAL DE SERVICIOS" />
             <item
-                android:id="@+id/nav_ho"
+                android:id="@+id/nav_citas"
                 android:icon="@drawable/cita"
                 android:title="CITAS" />
             <item
-                android:id="@+id/nav_homm"
+                android:id="@+id/nav_perfilvehiculos"
                 android:icon="@drawable/car_wash"
-                android:title="VEHICULOS" />
+                android:title="PERFIL DE VEHICULOS " />
 
         </menu>
 
@@ -45,7 +45,7 @@
         android:icon="@drawable/cita_online"
         android:title="MI PERFIL" />
             <item
-                android:id="@+id/nav_homn"
+                android:id="@+id/nav_cerrar"
                 android:icon="@drawable/sign_out"
                 android:title="CERRAR SESION" />
 
