@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#B6E8E3"
     tools:showIn="navigation_view">
+
 
     <item android:title="MENU DE NAVEGACION">
         <menu>
