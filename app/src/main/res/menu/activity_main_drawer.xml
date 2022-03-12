@@ -5,8 +5,6 @@
     tools:showIn="navigation_view">
 
 
-    <item android:title="MENU DE NAVEGACION">
-        <menu>
             <item
                 android:id="@+id/nav_inicio"
                 android:icon="@drawable/home__1_"
@@ -30,11 +28,11 @@
             <item
                 android:id="@+id/nav_perfilvehiculos"
                 android:icon="@drawable/car_wash"
-                android:title="PERFIL DE VEHICULOS " />
+                android:title="PERFIL DE VEHICULOS" />
 
-        </menu>
 
-    </item>
+
+
 
     //Item creado para dar espacio
             <item
