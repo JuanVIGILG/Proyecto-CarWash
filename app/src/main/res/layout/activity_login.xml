@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Jose@gmail.com"
+        android:hint="ejemplo@gmail.com"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="0.284" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/txtRegistrarse"
         android:layout_width="115dp"
         android:layout_height="26dp"
         android:text="Registrarse"
@@ -106,6 +106,7 @@
         app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button5" />
+
 
     <EditText
         android:id="@+id/editTextTextPassword"
