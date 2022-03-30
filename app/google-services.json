@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "788147474357",
+    "project_id": "elcatracho-60fbe",
+    "storage_bucket": "elcatracho-60fbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788147474357:android:53e66b3fcd5f9843b013fc",
+        "android_client_info": {
+          "package_name": "com.example.carwash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788147474357-ejsair1sjfulvsa0s8q4jjcoi12jcu0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_GESun1PJvJIxcgHjwmRN-wo0dvpX-1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788147474357-ejsair1sjfulvsa0s8q4jjcoi12jcu0t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

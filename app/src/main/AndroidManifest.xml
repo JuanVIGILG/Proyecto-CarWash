@@ -16,27 +16,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarWash">
-
         <activity
-            android:name=".RegistrarUsuario.ActivityRegistrarUsuario"
-            android:exported="true">
-        </activity>
-
+            android:name=".RecuperarPass.ActivityPass"
+            android:exported="false" />
         <activity
-            android:name=".Login.ActivityLogin"
+            android:name=".PantallaArranque"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            />
         </activity>
+        <activity
+            android:name=".RegistrarUsuario.ActivityRegistrarUsuario"
+            android:exported="true" />
+        <activity
+            android:name=".Login.ActivityLogin"
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.CarWash.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.CarWash.NoActionBar" />
     </application>
 
 </manifest>
