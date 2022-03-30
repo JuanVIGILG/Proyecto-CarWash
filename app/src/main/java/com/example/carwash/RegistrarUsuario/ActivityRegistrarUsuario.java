@@ -3,8 +3,11 @@ package com.example.carwash.RegistrarUsuario;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +25,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActivityRegistrarUsuario extends AppCompatActivity {
 
@@ -32,6 +39,7 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
     Boolean retorno;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
+    private String uid; // UID del Usuario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +80,14 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
-                                Toast.makeText(ActivityRegistrarUsuario.this, "USUARIO CREADO CON ÉXITO", Toast.LENGTH_SHORT).show();
-                                finish();
+                                //Toast.makeText(ActivityRegistrarUsuario.this, "USUARIO CREADO CON ÉXITO", Toast.LENGTH_SHORT).show();
+                                //finish();
+
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                user.sendEmailVerification();
+                                //InsertEmail();
+                                onCreateDialog();
+                                CleanScreen();
                             }else{
                                 String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                                 dameToastdeError(errorCode);
@@ -189,5 +203,81 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
 
         }
 
+    }
+
+    private void GetUID() {
+
+        firebaseAuth = FirebaseAuth.getInstance(); // Iniciar Firebase
+        FirebaseUser user = firebaseAuth.getCurrentUser();  // Obtener Usuario Actual
+
+        // Si usuario no existe
+        try {
+            if (user != null) {
+                uid = user.getUid(); // Obtener el UID del Usuario Actual
+            }
+        }
+        catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error: "+ e, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /*private void InsertEmail() {
+
+        GetUID();   // Obtener funcion UID para almacenarlo
+
+        String url = RestApiMethod.ApiPostClientUrl;    // URL del RestAPI
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error en Response", "onResponse: " + error.getMessage().toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                HashMap<String, String> parametros = new HashMap<String, String>();
+                parametros.put("uid", uid);
+                parametros.put("correo", correo);
+                parametros.put("nombre", nameuser);
+                parametros.put("pais", elemento);
+                return parametros;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(stringRequest);
+    }*/
+
+    private void onCreateDialog() {
+
+        String mail= txtEmail.getText().toString();
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityRegistrarUsuario.this);
+        builder.setMessage("Hemos enviado un enlace de verificacion a "+mail+". Por favor revise su bandeja de entrada o carpeta de correo no deseado");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        // Create the AlertDialog object and return it
+        AlertDialog titulo =builder.create();
+        titulo.show();
+    }
+
+    private void CleanScreen() {
+        txtNom.setText("");
+        txtApellido.setText("");
+        txtTelefono.setText("");
+        txtEmail.setText("");
+        txtPass.setText("");
+        //Pais.setSelection(adp.getPosition(DEFAULT_LOCAL));
     }
 }
