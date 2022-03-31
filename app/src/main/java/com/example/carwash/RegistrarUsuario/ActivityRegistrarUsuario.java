@@ -4,22 +4,33 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.carwash.Login.ActivityLogin;
 import com.example.carwash.R;
+import com.example.carwash.RestApi;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,6 +38,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,12 +47,18 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
 
     TextView txtlogin;
     EditText txtNom, txtApellido,txtTelefono,txtEmail,txtPass;
-    Spinner Pais;
     Button btnRegistrar;
     Boolean retorno;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
     private String uid; // UID del Usuario
+    // Array de Paises en Spinner
+    private ArrayList<String> Paises;
+    ArrayAdapter adp;
+    private Spinner sp_paisap;
+    private static final String DEFAULT_LOCAL = "Honduras";
+    private String elemento;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +76,29 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         txtTelefono = (EditText) findViewById(R.id.txtTelefono);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtPass = (EditText) findViewById(R.id.txtPass);
-        Pais = (Spinner) findViewById(R.id.Pais);
         btnRegistrar = (Button) findViewById(R.id.btnRegistrar);
+        sp_paisap = (Spinner) findViewById(R.id.Pais); //Elemento del Spinner de Paises
+
+        String[] paises = getResources().getStringArray(R.array.paises);
+        Paises = new ArrayList<>(Arrays.asList(paises));
+
+        adp = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Paises);
+        sp_paisap.setAdapter(adp);
+        sp_paisap.setSelection(adp.getPosition(DEFAULT_LOCAL));
+
+        sp_paisap.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                elemento = (String) sp_paisap.getAdapter().getItem(position);   // El elemento seleccionado del Spinner
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
 
         txtlogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +125,8 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
 
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 user.sendEmailVerification();
-                                //InsertEmail();
+                                InsertEmail();
+                                //insertData();
                                 onCreateDialog();
                                 CleanScreen();
                             }else{
@@ -221,16 +262,76 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         }
     }
 
-    /*private void InsertEmail() {
+   /* private void insertData() {
+        GetUID();
+
+        uid.toString();
+        final String nombre = txtNom.getText().toString().trim();
+        final String correo = txtEmail.getText().toString().trim();
+        final String pais = Pais.toString().trim();
+
+            StringRequest request = new StringRequest(Request.Method.POST, "https://sitiosweb2021.000webhostapp.com/Carwash/crearUsuario.php",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            if(response.equalsIgnoreCase("Datos insertados")){
+
+                                Toast.makeText(ActivityRegistrarUsuario.this, "Datos insertados", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText(ActivityRegistrarUsuario.this, "No se puede insertar", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(ActivityRegistrarUsuario.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            ){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Map<String,String> params = new HashMap<String,String>();
+
+                    params.put("uid",uid);
+                    params.put("correo",correo);
+                    params.put("nombre",nombre);
+                    params.put("pais",pais);
+                    return params;
+                }
+            };
+
+
+            RequestQueue requestQueue = Volley.newRequestQueue(ActivityRegistrarUsuario.this);
+            requestQueue.add(request);
+
+
+    }*/
+    private void InsertEmail() {
 
         GetUID();   // Obtener funcion UID para almacenarlo
 
-        String url = RestApiMethod.ApiPostClientUrl;    // URL del RestAPI
+        uid.toString();
+        final String nombre = txtNom.getText().toString().trim();
+        final String correo = txtEmail.getText().toString().trim();
+        final String pais = sp_paisap.toString().trim();
+
+        String url = RestApi.ApiPostRegistrar;    // URL del RestAPI
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                if(response.equalsIgnoreCase("Datos insertados")){
 
+                    Toast.makeText(ActivityRegistrarUsuario.this, "Datos insertados", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(ActivityRegistrarUsuario.this, "No se puede insertar", Toast.LENGTH_SHORT).show();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -244,15 +345,15 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
                 HashMap<String, String> parametros = new HashMap<String, String>();
                 parametros.put("uid", uid);
                 parametros.put("correo", correo);
-                parametros.put("nombre", nameuser);
-                parametros.put("pais", elemento);
+                parametros.put("nombre", nombre);
+                parametros.put("pais", pais);
                 return parametros;
             }
         };
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(stringRequest);
-    }*/
+    }
 
     private void onCreateDialog() {
 
