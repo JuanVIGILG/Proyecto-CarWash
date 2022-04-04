@@ -3,8 +3,10 @@ package com.example.carwash.Vehiculo;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,6 +20,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -71,6 +76,11 @@ public class PerfilVehiculoFragment extends Fragment {
 
     ListView Lista;
     Button btnEliminar;
+
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -126,6 +136,7 @@ public class PerfilVehiculoFragment extends Fragment {
             Lista = (ListView)view.findViewById(R.id.lista);
             btnEliminar = (Button)view.findViewById(R.id.btnEliminar);
             http = new AsyncHttpClient();
+            swipeRefreshLayout = view.findViewById(R.id.perfil_vehiculo);
 
             rq = Volley.newRequestQueue(getContext());
 
@@ -183,12 +194,51 @@ public class PerfilVehiculoFragment extends Fragment {
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getContext(), "El Id Seleccionado es: "+IdVehiculoBD, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ELIMINAR: El Id Seleccionado es: "+IdVehiculoBD, Toast.LENGTH_SHORT).show();
+                System.out.println("IDVEHI EN ELIMINAR: "+IdVehiculoBD);
                 if(SelectedRow==false){
                     Toast.makeText(getContext(), "Seleccione un Vehiculo para eliminar", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    eliminarBrenda();
+                    AlertDialog.Builder builder= new AlertDialog.Builder(getContext());
+                    builder.setMessage("Desea eliminar el vehiculo");
+                    builder.setTitle("Eliminar");
+
+                    builder.setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            eliminar();
+
+                            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                                @Override
+                                public void onRefresh() {
+
+                                }
+                            });
+
+                            //Refresh main activity upon close of dialog box
+                            // Intent refresh = new Intent(this, clsMainUIActivity.class);
+                            // startActivity(refresh);
+                            // this.finish();
+
+                            /*public void onClick (View v){
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent); }*/
+
+
+                        }
+                    });
+
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
 
             }
@@ -297,44 +347,16 @@ public class PerfilVehiculoFragment extends Fragment {
         }
     }
 
-    private void eliminarVehiculo(){
-        String URL = RestApi.ApiPostEliminarVehiculo;
-        StringRequest stringRequest= new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(getContext(), "Operacion Exitosa", Toast.LENGTH_SHORT).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                //IdVehiculoBD = String.valueOf(id_vehiculo);
-                System.out.println("RETORNO"+IdVehiculoBD);
-
-                Map<String,String> parametros=new HashMap<String,String>();
-                parametros.put("idvehi", IdVehiculoBD);
-                return parametros;
-
-
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        queue.add(stringRequest);
-
-    }
-
-    private void eliminarBrenda(){
-        IdVehiculoBD = String.valueOf(id_vehiculo);
+    private void eliminar(){
+        System.out.println("ANTES DE LA CONVERSION "+IdVehiculoBD);
         String url = "https://sitiosweb2021.000webhostapp.com/Carwash/eliminar.php";
         JSONObject parametros = new JSONObject();
         try {
-            parametros.put("idvehi",id_vehiculo);
+
+            System.out.println("ID STRING "+IdVehiculoBD);
+
+            parametros.put("idvehi",IdVehiculoBD);
+
 
         }catch (JSONException e){
             e.printStackTrace();
