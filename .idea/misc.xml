@@ -24,9 +24,26 @@
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/CarWash2/app/src/main/res/layout/content_main.xml" value="0.12771739130434784" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Proyecto-CarWash/app/src/main/res/layout/activity_registrar_usuario.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/activity_main.xml" value="0.14492753623188406" />
         <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/activity_pantalla_arranque.xml" value="0.12310030395136778" />
         <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/activity_pass.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/activity_registrar_usuario.xml" value="0.14492753623188406" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/activity_registrar_usuario.xml" value="0.264" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment__registro__vehiculo.xml" value="0.1" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_cotizacion.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_inicio.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_perfil_usuario.xml" value="0.1" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_perfil_usuario_vehiculo.xml" value="0.24320652173913043" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_perfil_vehiculo.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_registrarvehiculo.xml" value="0.264" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_registro__vehiculo.xml" value="0.14492753623188406" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_registro_automovil.xml" value="0.1" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/fragment_registro_vehiculo.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/item_spinner.xml" value="0.1" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/layout/nav_header_main.xml" value="0.1621376811594203" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/menu/activity_main_drawer.xml" value="0.6" />
+        <entry key="..\:/Users/petit/Desktop/Universidad/I PERIODO 2022/PROGRAMACION MOVIL I/III PARCIAL/Proyecto-CarWash/Proyecto-CarWash/app/src/main/res/menu/main.xml" value="0.253125" />
       </map>
     </option>
   </component>

@@ -1,4 +1,4 @@
-package com.example.carwash.RecuperarPass;
+package com.example.carwash.Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

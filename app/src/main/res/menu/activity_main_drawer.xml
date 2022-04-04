@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:background="#B6E8E3"
     tools:showIn="navigation_view">
 
 
             <item
-                android:id="@+id/nav_inicio"
+                android:id="@+id/nav_inicio_item"
                 android:icon="@drawable/home__1_"
                 android:title="INICIO" />
             <item
@@ -18,21 +19,17 @@
                 android:icon="@drawable/car"
                 android:title="REGISTRAR UN VEHICULO" />
             <item
-                android:id="@+id/nav_historial"
-                android:icon="@drawable/checklist"
-                android:title="HISTORIAL DE SERVICIOS" />
-            <item
-                android:id="@+id/nav_citas"
-                android:icon="@drawable/cita"
-                android:title="CITAS" />
-            <item
                 android:id="@+id/nav_perfilvehiculos"
                 android:icon="@drawable/car_wash"
-                android:title="PERFIL DE VEHICULOS" />
-
-
-
-
+                android:title="VEHICULOS REGISTRADOS" />
+            <item
+                android:id="@+id/nav_historialLavados"
+                android:icon="@drawable/checklist"
+                android:title="HISTORIAL DE LAVADOS" />
+            <item
+                android:id="@+id/nav_historialaceite"
+                android:icon="@drawable/checklist"
+                android:title="HISTORIAL DE ACEITE" />
 
     //Item creado para dar espacio
             <item

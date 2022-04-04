@@ -1,4 +1,4 @@
-package com.example.carwash.RegistrarUsuario;
+package com.example.carwash.Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +27,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.example.carwash.Login.ActivityLogin;
 import com.example.carwash.R;
 import com.example.carwash.RestApi;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,7 +55,7 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
     ArrayAdapter adp;
     private Spinner sp_paisap;
     private static final String DEFAULT_LOCAL = "Honduras";
-    private String elemento;
+    String nombre,apellido,celular, mail, pass, elemento;
 
 
     @Override
@@ -112,8 +110,11 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validar();
-                String mail= txtEmail.getText().toString();
-                String pass = txtPass.getText().toString();
+                nombre = txtNom.getText().toString().trim();
+                apellido= txtApellido.getText().toString();
+                celular = txtTelefono.getText().toString();
+                mail= txtEmail.getText().toString().trim();
+                pass = txtPass.getText().toString().trim();
 
                 if (awesomeValidation.validate()){
                     firebaseAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -262,91 +263,46 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         }
     }
 
-   /* private void insertData() {
-        GetUID();
-
-        uid.toString();
-        final String nombre = txtNom.getText().toString().trim();
-        final String correo = txtEmail.getText().toString().trim();
-        final String pais = Pais.toString().trim();
-
-            StringRequest request = new StringRequest(Request.Method.POST, "https://sitiosweb2021.000webhostapp.com/Carwash/crearUsuario.php",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-
-                            if(response.equalsIgnoreCase("Datos insertados")){
-
-                                Toast.makeText(ActivityRegistrarUsuario.this, "Datos insertados", Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                Toast.makeText(ActivityRegistrarUsuario.this, "No se puede insertar", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(ActivityRegistrarUsuario.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            ){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-
-                    Map<String,String> params = new HashMap<String,String>();
-
-                    params.put("uid",uid);
-                    params.put("correo",correo);
-                    params.put("nombre",nombre);
-                    params.put("pais",pais);
-                    return params;
-                }
-            };
-
-
-            RequestQueue requestQueue = Volley.newRequestQueue(ActivityRegistrarUsuario.this);
-            requestQueue.add(request);
-
-
-    }*/
     private void InsertEmail() {
 
         GetUID();   // Obtener funcion UID para almacenarlo
 
-        uid.toString();
-        final String nombre = txtNom.getText().toString().trim();
-        final String correo = txtEmail.getText().toString().trim();
-        final String pais = sp_paisap.toString().trim();
+        ProgressDialog progressDialog=new ProgressDialog( this);
 
         String url = RestApi.ApiPostRegistrar;    // URL del RestAPI
 
+        progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.equalsIgnoreCase("Datos insertados")){
-
                     Toast.makeText(ActivityRegistrarUsuario.this, "Datos insertados", Toast.LENGTH_SHORT).show();
+
                 }
                 else{
                     Toast.makeText(ActivityRegistrarUsuario.this, "No se puede insertar", Toast.LENGTH_SHORT).show();
                 }
+                progressDialog.dismiss();
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("Error en Response", "onResponse: " + error.getMessage().toString());
+                Toast.makeText(ActivityRegistrarUsuario.this, "No se puede insertar "+error.toString(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                HashMap<String, String> parametros = new HashMap<String, String>();
+                Map<String, String> parametros = new HashMap<String, String>();
+
                 parametros.put("uid", uid);
-                parametros.put("correo", correo);
+                parametros.put("correo", mail);
                 parametros.put("nombre", nombre);
-                parametros.put("pais", pais);
+                parametros.put("apellido", apellido);
+                parametros.put("celular", celular);
+                parametros.put("pais", elemento);
                 return parametros;
             }
         };
@@ -379,6 +335,6 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         txtTelefono.setText("");
         txtEmail.setText("");
         txtPass.setText("");
-        //Pais.setSelection(adp.getPosition(DEFAULT_LOCAL));
+        sp_paisap.setSelection(adp.getPosition(DEFAULT_LOCAL));
     }
 }

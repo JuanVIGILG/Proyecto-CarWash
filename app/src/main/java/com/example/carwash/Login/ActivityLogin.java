@@ -3,8 +3,6 @@ package com.example.carwash.Login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -16,10 +14,8 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.example.carwash.MainActivity;
+import com.example.carwash.ActivityMain;
 import com.example.carwash.R;
-import com.example.carwash.RecuperarPass.ActivityPass;
-import com.example.carwash.RegistrarUsuario.ActivityRegistrarUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -97,7 +93,7 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void Inicio(){
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, ActivityMain.class);
         i.putExtra("mail",txtCorreo.getText().toString());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
