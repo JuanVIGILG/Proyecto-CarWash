@@ -111,8 +111,8 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
             public void onClick(View view) {
                 validar();
                 nombre = txtNom.getText().toString().trim();
-                apellido= txtApellido.getText().toString();
-                celular = txtTelefono.getText().toString();
+                apellido= txtApellido.getText().toString().trim();
+                celular = txtTelefono.getText().toString().trim();
                 mail= txtEmail.getText().toString().trim();
                 pass = txtPass.getText().toString().trim();
 

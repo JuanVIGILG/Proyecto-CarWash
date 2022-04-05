@@ -126,7 +126,7 @@ public class PerfilVehiculoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_perfil_usuario_vehiculo, container, false);
+        View view = inflater.inflate(R.layout.fragment_perfil_vehiculo, container, false);
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -136,7 +136,7 @@ public class PerfilVehiculoFragment extends Fragment {
             Lista = (ListView)view.findViewById(R.id.lista);
             btnEliminar = (Button)view.findViewById(R.id.btnEliminar);
             http = new AsyncHttpClient();
-            swipeRefreshLayout = view.findViewById(R.id.perfil_vehiculo);
+            //swipeRefreshLayout = view.findViewById(R.id.perfil_vehiculo);
 
             rq = Volley.newRequestQueue(getContext());
 
@@ -210,12 +210,12 @@ public class PerfilVehiculoFragment extends Fragment {
 
                             eliminar();
 
-                            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                            /*swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                                 @Override
                                 public void onRefresh() {
 
                                 }
-                            });
+                            });*/
 
                             //Refresh main activity upon close of dialog box
                             // Intent refresh = new Intent(this, clsMainUIActivity.class);

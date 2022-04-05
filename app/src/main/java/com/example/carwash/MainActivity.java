@@ -21,18 +21,18 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.carwash.Login.ActivityLogin;
 import com.example.carwash.databinding.ActivityMainBinding;
-import com.example.carwash.ui.cotizacion.cotizacion_Fragment;
+import com.example.carwash.Cotizacion.cotizacion_Fragment;
 import com.example.carwash.ui.inicio.inicio_Fragment;
-import com.example.carwash.ui.perfilusuario.PerfilUsuarioFragment;
 import com.example.carwash.Vehiculo.PerfilVehiculoFragment;
 import com.example.carwash.Vehiculo.RegistroVehiculoFragment;
+import com.example.carwash.Usuario.PerfilUsuarioFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ActivityMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;

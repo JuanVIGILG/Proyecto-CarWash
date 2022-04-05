@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.example.carwash.ActivityMain;
+import com.example.carwash.MainActivity;
 import com.example.carwash.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -93,7 +93,7 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void Inicio(){
-        Intent i = new Intent(this, ActivityMain.class);
+        Intent i = new Intent(this, MainActivity.class);
         i.putExtra("mail",txtCorreo.getText().toString());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);

@@ -32,7 +32,7 @@ import com.example.carwash.R;
 import com.example.carwash.RestApi;
 import com.example.carwash.databinding.FragmentRegistroAutomovilBinding;
 import com.example.carwash.Spinner.Spinners;
-import com.example.carwash.ui.cotizacion.SlideshowViewModel;
+import com.example.carwash.Cotizacion.SlideShowViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.loopj.android.http.AsyncHttpClient;
@@ -66,7 +66,7 @@ public class RegistroVehiculoFragment extends Fragment {
     private String mParam2;
 
     private FragmentRegistroAutomovilBinding binding;
-    private SlideshowViewModel slideshowViewModel;
+    private SlideShowViewModel slideshowViewModel;
 
     private Spinner spmarca,sp_anio, sptipoaceite;
     private String ItemMarcaModelo, ItemAnio, ItemTAceite;
@@ -115,12 +115,13 @@ public class RegistroVehiculoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_registro_automovil, container, false);
+        View view = inflater.inflate(R.layout.fragment_registro_automovil, container, false);
 
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        /*slideshowViewModel =
+                new ViewModelProvider(this).get(SlideShowViewModel.class);
 
         binding = FragmentRegistroAutomovilBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View root = binding.getRoot();*/
 
         System.out.println("INICIANDO");
 
@@ -131,11 +132,11 @@ public class RegistroVehiculoFragment extends Fragment {
             http = new AsyncHttpClient();
             System.out.println("HOLAAAAAA, SI ENTRAAAA");
             // Elementos del diseño de Spinners
-            spmarca = (Spinner)root.findViewById(R.id.sp_model); //Elemento del Spinner de Marca y modelo
-            sp_anio = (Spinner)root.findViewById(R.id.sp_anio); //Elemento del Spinner de Años
-            sptipoaceite = (Spinner)root.findViewById(R.id.sp_taceite); //Elemento del Spinner de Tipo de Aceite
+            spmarca = (Spinner) view.findViewById(R.id.sp_model); //Elemento del Spinner de Marca y modelo
+            sp_anio = (Spinner)view.findViewById(R.id.sp_anio); //Elemento del Spinner de Años
+            sptipoaceite = (Spinner)view.findViewById(R.id.sp_taceite); //Elemento del Spinner de Tipo de Aceite
 
-            btnguardar = (Button)root.findViewById(R.id.btnAgg);
+            btnguardar = (Button)view.findViewById(R.id.btnAgg);
 
             rq = Volley.newRequestQueue(getContext());
 
@@ -156,7 +157,7 @@ public class RegistroVehiculoFragment extends Fragment {
             });
         }else{
             Toast.makeText(getActivity(),"Sin conexion a internet",Toast.LENGTH_SHORT).show();
-            root.setOnTouchListener(new View.OnTouchListener() {
+            view.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()){
@@ -180,7 +181,7 @@ public class RegistroVehiculoFragment extends Fragment {
                 }
             });
         }
-        return root;
+        return view;
     }
 
     private void ListaModelos(String URL){
@@ -338,13 +339,15 @@ public class RegistroVehiculoFragment extends Fragment {
     }
 
     private void SearchUID(String URL) {
+        System.out.println("SEARCHUID");
         JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
+                System.out.println("ON RESPONSE SEARCH UID");
                 JSONObject jsonObject = null;
                 for (int i = 0; i < response.length(); i++) {
                     try {
+                        System.out.println("TRY SEARCH UID");
                         jsonObject = response.getJSONObject(i);
                         idUser = jsonObject.getInt("id_users");
                         System.out.println("IDUSERS"+idUser);
