@@ -339,7 +339,6 @@ public class PerfilVehiculoFragment extends Fragment {
             JSONArray jsonArreglo = new JSONArray(URL);
             for(int i=0; i<jsonArreglo.length(); i++){
                 iddevehiculo[i] = jsonArreglo.getJSONObject(i).getString("idvehi");
-                System.out.println("ID VEHICULO"+iddevehiculo);
             }
         }
         catch (Exception e1){
@@ -353,10 +352,7 @@ public class PerfilVehiculoFragment extends Fragment {
         JSONObject parametros = new JSONObject();
         try {
 
-            System.out.println("ID STRING "+IdVehiculoBD);
-
             parametros.put("idvehi",IdVehiculoBD);
-
 
         }catch (JSONException e){
             e.printStackTrace();

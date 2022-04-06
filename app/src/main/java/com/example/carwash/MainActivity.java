@@ -1,9 +1,7 @@
 package com.example.carwash;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +24,6 @@ import com.example.carwash.Historial.LavadosFragment;
 import com.example.carwash.Login.ActivityLogin;
 import com.example.carwash.databinding.ActivityMainBinding;
 import com.example.carwash.Cotizacion.cotizacion_Fragment;
-import com.example.carwash.ui.inicio.inicio_Fragment;
 import com.example.carwash.Vehiculo.PerfilVehiculoFragment;
 import com.example.carwash.Vehiculo.RegistroVehiculoFragment;
 import com.example.carwash.Usuario.PerfilUsuarioFragment;
@@ -118,18 +115,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences();
-        String pref = preferences.getString("uid","");
-        if (!pref.equals("")){
-            Intent i = new Intent(this, MainActivity.class);
-            Toast.makeText(this, "BIENVENIDO", Toast.LENGTH_SHORT).show();
-
-
-        }
-    }*/
 
    @Override
     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {

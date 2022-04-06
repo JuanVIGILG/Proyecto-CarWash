@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/perfil_vehiculo"
     android:layout_height="match_parent"
-    android:background="#B6E8E3"
+    android:background="@drawable/fondo"
     tools:context=".Vehiculo.PerfilVehiculoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +19,8 @@
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="24dp"
             android:text="LISTA DE VEHICULOS"
+            android:textSize="20dp"
+            android:textColor="@color/purple_700"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +45,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="52dp"
-            android:backgroundTint="@color/teal_700"
+            android:backgroundTint="@color/botones"
             android:text="ELIMINAR"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -54,7 +54,7 @@
         android:layout_height="33dp"
         android:text="Pais:"
         android:textColor="#1C75BC"
-        android:textColorHighlight="@color/teal_700"
+        android:textColorHighlight="@color/botones"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

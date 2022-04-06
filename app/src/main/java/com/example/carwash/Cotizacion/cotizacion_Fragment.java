@@ -172,6 +172,44 @@ public class cotizacion_Fragment extends Fragment {
             handler.postAtTime(runnable, System.currentTimeMillis() + interval);
             handler.postDelayed(runnable, interval);
 
+            // SI SERVICIO ES CAMBIO DE ACEITE
+            sp_servicios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ItemServicios = (String) sp_servicios.getAdapter().getItem(position).toString();   // El elemento seleccionado del Spinner
+
+                    String CA = "Cambio de Aceite";
+
+                    if (ItemServicios.equals(CA)) {
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
+                        alerta.setMessage("Unicamente se hace en centro de servicio")
+                                .setCancelable(false)
+                                .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        sp_ubicacion.setSelection(adapter2.getPosition("Centro de Servicio"));
+                                        sp_ubicacion.setEnabled(false);
+                                    }
+                                });
+                        AlertDialog titulo = alerta.create();
+                        titulo.setTitle("Aviso");
+                        titulo.show();
+
+                    }
+                    else{
+                        sp_ubicacion.setEnabled(true);
+
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
             // ESCOGER UBICACION EN EL SPINNER
             contenido = new String[]{"Seleccione","Centro de Servicio", "A Domicilio"};
             ArrayList<String> ubicacion = new ArrayList<>(Arrays.asList(contenido));

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_gallery"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.historial.HistorialFragment">
+    android:background="@drawable/fondo"
+    tools:context=".Historial.CambiosAceiteFragment">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -21,9 +21,10 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="USUARIOS"
+            android:textColor="@color/purple_700"
+            android:text="Historial de Cambios de Aceite"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reciclador"
@@ -31,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtTitulo"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:textSize="15dp" />
     </RelativeLayout>
 
-</RelativeLayout>
+</FrameLayout>
