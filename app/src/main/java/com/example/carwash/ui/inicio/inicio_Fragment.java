@@ -23,9 +23,9 @@ public class inicio_Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        //return inflater.inflate(R.layout.fragment_inicio, container, false);
+        return inflater.inflate(R.layout.fragment_inicio, container, false);
 
-        homeViewModel =
+        /*homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentInicioBinding.inflate(inflater, container, false);
@@ -38,7 +38,7 @@ public class inicio_Fragment extends Fragment {
                 textView.setText(s);
             }
         });
-        return root;
+        return root;*/
     }
 
     @Override

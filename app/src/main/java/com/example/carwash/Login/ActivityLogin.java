@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ActivityLogin extends AppCompatActivity {
 
@@ -79,8 +80,23 @@ public class ActivityLogin extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
                                 //Metodo para ir a la pantalla Principal
-                                Inicio();
+
+
+                                if(!user.isEmailVerified()){
+                                    ///si user devuelve un valor false, enviamos un mensaje al usuario con un Toast
+                                    //donde le coomunicamos que todavia no ha ido a verificar su correo con el enlace que le enviamos
+                                    clean();
+                                    Toast.makeText(ActivityLogin.this, "Correo electronico no verificado", Toast.LENGTH_LONG).show();
+                                }else{
+                                    // si User nos devuelve un valor true significa que el correo esta verificado
+                                    // Accede a la aplicacion
+                                    //Intent dashboardActivity = new Intent(ActivityLogin.this, MainActivity.class);
+                                    //startActivity(dashboardActivity);
+                                    Inicio();
+                                }
+
                             }else{
                                 String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
                                 dameToastdeError(errorCode);
@@ -90,6 +106,11 @@ public class ActivityLogin extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void clean() {
+        txtCorreo.setText("");
+        txtContrasenia.setText("");
     }
 
     private void Inicio(){
@@ -178,5 +199,17 @@ public class ActivityLogin extends AppCompatActivity {
 
         }
 
+    }
+
+    protected void onStart() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user!=null){ //si no es null el usuario ya esta logueado
+            //mover al usuario al dashboard
+            if(user.isEmailVerified()){
+                Intent dashboardActivity = new Intent(ActivityLogin.this, MainActivity.class);
+                startActivity(dashboardActivity);
+            }
+        }
+        super.onStart();
     }
 }

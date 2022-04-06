@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
-    android:background="#B6E8E3"
+    android:background="#FFFFFF"
     tools:showIn="navigation_view">
 
 
             <item
-                android:id="@+id/nav_inicio_item"
+                android:id="@+id/nav_inicio"
                 android:icon="@drawable/home__1_"
                 android:title="INICIO" />
             <item
@@ -23,13 +23,14 @@
                 android:icon="@drawable/car_wash"
                 android:title="VEHICULOS REGISTRADOS" />
             <item
-                android:id="@+id/nav_historialLavados"
-                android:icon="@drawable/checklist"
-                android:title="HISTORIAL DE LAVADOS" />
-            <item
                 android:id="@+id/nav_historialaceite"
                 android:icon="@drawable/checklist"
                 android:title="HISTORIAL DE ACEITE" />
+            <item
+                android:id="@+id/nav_historiallavados"
+                android:icon="@drawable/checklist"
+                android:title="HISTORIAL DE LAVADOS" />
+
 
     //Item creado para dar espacio
             <item

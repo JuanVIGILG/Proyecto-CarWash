@@ -1,11 +1,13 @@
 package com.example.carwash;
-// EL DEL MASTER
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.carwash.Historial.CambiosAceiteFragment;
+import com.example.carwash.Historial.LavadosFragment;
 import com.example.carwash.Login.ActivityLogin;
 import com.example.carwash.databinding.ActivityMainBinding;
 import com.example.carwash.Cotizacion.cotizacion_Fragment;
@@ -29,6 +33,7 @@ import com.example.carwash.Usuario.PerfilUsuarioFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseAuth mAuth;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        GetUser();
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -95,6 +102,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    // OBTENER UID DEL USUARIO EN FIREBASE
+    private void GetUser() {
+
+        mAuth = FirebaseAuth.getInstance();            // Iniciar Firebase
+        FirebaseUser user = mAuth.getCurrentUser();     // Obtener Usuario Actual
+
+        try {
+            if (user != null) {
+                uid = user.getUid(); // Obtener el UID del Usuario Actual
+            }
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Error: "+ e, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /*@Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences();
+        String pref = preferences.getString("uid","");
+        if (!pref.equals("")){
+            Intent i = new Intent(this, MainActivity.class);
+            Toast.makeText(this, "BIENVENIDO", Toast.LENGTH_SHORT).show();
+
+
+        }
+    }*/
+
    @Override
     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
         int id = item.getItemId();
@@ -130,6 +166,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.nav_inicio, new PerfilVehiculoFragment());
+            fragmentTransaction.commit();
+
+        }else if (id == R.id.nav_historialaceite) {
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.nav_inicio, new CambiosAceiteFragment());
+            fragmentTransaction.commit();
+
+        }
+        else if (id == R.id.nav_historiallavados) {
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.nav_inicio, new LavadosFragment());
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_cerrar) {

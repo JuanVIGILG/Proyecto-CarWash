@@ -4,11 +4,15 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -19,6 +23,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -35,13 +41,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.carwash.MainActivity;
 import com.example.carwash.R;
 import com.example.carwash.RestApi;
 import com.example.carwash.Spinner.Spinners;
@@ -59,8 +70,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -83,7 +97,7 @@ public class cotizacion_Fragment extends Fragment {
 
     //SPINNERS
     Spinner sp_vehiculos,sp_servicios,sp_ubicacion;
-    private String ItemServicios, ItemUbicacion;
+    private String ItemVehiculo, ItemServicios, ItemUbicacion;
     private ArrayList<Spinners> lista;
     ArrayAdapter<Spinners> adp;
     private ArrayAdapter adapter2;
@@ -101,7 +115,8 @@ public class cotizacion_Fragment extends Fragment {
     EditText txtFecha,txtHora;
 
     //BOTONES
-    Button btnGuardar,btnFecha,btnHora;
+    Button btnGuardar;
+    ImageButton btnFecha,btnHora;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -117,8 +132,8 @@ public class cotizacion_Fragment extends Fragment {
             sp_servicios = (Spinner) view.findViewById(R.id.sp_servicios);
             sp_ubicacion = (Spinner) view.findViewById(R.id.sp_ubicacion);
 
-            btnFecha = (Button) view.findViewById(R.id.btnFecha);
-            btnHora = (Button) view.findViewById(R.id.btnHora);
+            btnFecha = (ImageButton) view.findViewById(R.id.btnFecha);
+            btnHora = (ImageButton) view.findViewById(R.id.btnHora);
             btnGuardar = (Button) view.findViewById(R.id.btnGuardar);
 
             txtFecha = (EditText) view.findViewById(R.id.txtFecha);
@@ -129,7 +144,8 @@ public class cotizacion_Fragment extends Fragment {
             http = new AsyncHttpClient();
             rq = Volley.newRequestQueue(getContext());
 
-
+            txtFecha.setInputType(InputType.TYPE_NULL);
+            txtHora.setInputType(InputType.TYPE_NULL);
 
             GetUser(); // Funcion para obtener UID y ID del usuario
 
@@ -191,6 +207,48 @@ public class cotizacion_Fragment extends Fragment {
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
+                }
+            });
+
+            btnFecha.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Calendar c = Calendar.getInstance();
+                    dia = c.get(Calendar.DAY_OF_MONTH);
+                    mes = c.get(Calendar.MONTH);
+                    anio = c.get(Calendar.YEAR);
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                            txtFecha.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
+                        }
+                    },anio,mes,dia);
+                    datePickerDialog.show();
+                }
+            });
+
+            btnHora.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Calendar c = Calendar.getInstance();
+                    hora = c.get(Calendar.HOUR_OF_DAY);
+                    minutos = c.get(Calendar.MINUTE);
+
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            txtHora.setText(hourOfDay+":"+minute);
+                        }
+                    }, hora,minutos,false);
+                    timePickerDialog.show();
+                }
+            });
+
+            btnGuardar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    validar();
                 }
             });
 
@@ -380,38 +438,6 @@ public class cotizacion_Fragment extends Fragment {
         }
     }
 
-    // SELECCIONAR FECHA Y HORA
-    public void onClick(View v) {
-
-        if (v == btnFecha){
-            final Calendar c = Calendar.getInstance();
-            dia = c.get(Calendar.DAY_OF_MONTH);
-            mes = c.get(Calendar.MONTH);
-            anio = c.get(Calendar.YEAR);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                    txtFecha.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
-                }
-            },anio,mes,dia);
-            datePickerDialog.show();
-
-        }if (v == btnHora){
-            final Calendar c = Calendar.getInstance();
-            hora = c.get(Calendar.HOUR_OF_DAY);
-            minutos = c.get(Calendar.MINUTE);
-
-            TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    txtHora.setText(hourOfDay+":"+minute);
-                }
-            }, hora,minutos,false);
-            timePickerDialog.show();
-        }
-    }
-
     // PEDIR PERMISOS PARA LA UBICACION
     public void Permisos(){
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -523,11 +549,78 @@ public class cotizacion_Fragment extends Fragment {
             textViewUbicacion.setError(null);
             txtHora.setError(null);
             txtFecha.setError(null);
-            //guardarCotizacion();
+            guardarCotizacion();
         }
         return retorno;
     }
 
+    // GUARDAR COTIZACION EN LA BASE DE DATOS
+    private void guardarCotizacion(){
+        String URL = RestApi.ApiPostCotizacion;
+        StringRequest stringRequest= new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Toast.makeText(getContext(), "Operacion Exitosa", Toast.LENGTH_SHORT).show();
+                createNotification();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> parametros=new HashMap<String,String>();
+                String FechaHora= txtFecha.getText().toString()+" "+txtHora.getText().toString()+":00";
+
+                parametros.put("vehiculo", IdVehiculoBD);
+                parametros.put("servicio", ItemServicios);
+                parametros.put("ubicacion", ItemUbicacion);
+                parametros.put("fecha", FechaHora);
+                parametros.put("estado", "Aprobado");
+                parametros.put("iduser",iduser);
+                return parametros;
+
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(stringRequest);
+
+    }
+
+    private void createNotification(){
+        String id="mensaje";
+        NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),id);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(id, "nuevo", NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel.setShowBadge(true);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        builder.setAutoCancel(true).setWhen(System.currentTimeMillis())
+                .setContentTitle("Cotización de Servicio").setSmallIcon(R.mipmap.ic_launcher_foreground)
+                .setContentText("Su cotización ha sido aprobada con exito.")
+                .setColor(Color.BLUE)
+                .setContentIntent(sendNotification())
+                .setContentInfo("nuevo");
+        Random random = new Random();
+        int id_notification = random.nextInt(8000);
+
+        assert notificationManager != null;
+        notificationManager.notify(id_notification,builder.build());
+    }
+
+    public PendingIntent sendNotification(){
+        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+        intent.putExtra("color", "rojo");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        return PendingIntent.getActivity(getActivity(),0,intent,0);
+    }
 
     @Override
     public void onDestroyView() {

@@ -7,4 +7,5 @@ public class RestApi {
     public static final String ApiPostCrearVehiculo = "https://sitiosweb2021.000webhostapp.com/Carwash/crearVehiculo.php";
     public static final String ApiPostServicios = "https://sitiosweb2021.000webhostapp.com/Carwash/buscar_servicios.php";
     public static final String ApiPutUrlClient = "https://sitiosweb2021.000webhostapp.com/Carwash/consultarCliente.php";
+    public static final String ApiPostCotizacion ="https://sitiosweb2021.000webhostapp.com/Carwash/crearCotizacion.php";
 }
