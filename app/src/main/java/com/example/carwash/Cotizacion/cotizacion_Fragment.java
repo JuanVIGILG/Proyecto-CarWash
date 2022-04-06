@@ -93,7 +93,7 @@ public class cotizacion_Fragment extends Fragment {
     //VEHICULOS
     private int idUser; // ID del Usuario tabla CREARVEHICULO
     private String[] iddevehiculo= new String[900]; //IDVEHICULO de la posicion
-    private String IdVehiculoBD; // ID del Vehiculo tabla CREARVEHICULO
+    private String IdVehiculoBD,vehiculo; // ID del Vehiculo tabla CREARVEHICULO
 
     //SPINNERS
     Spinner sp_vehiculos,sp_servicios,sp_ubicacion;
@@ -155,17 +155,21 @@ public class cotizacion_Fragment extends Fragment {
                 public void run() {
                     ObtenerVehiculos();     // Funcion para cargar Vehiculos en Spinner
                     ObtenerServicios();     // Funcion para cargar Servicios en Spinner
-                    sp_vehiculos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    /*sp_vehiculos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             IdVehiculoBD = iddevehiculo[position];
+
+                            ItemVehiculo = vehiculo;
+
+                            System.out.println("VEHICULO: "+ItemVehiculo);
                         }
 
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
 
                         }
-                    });
+                    });*/
                 }
             };
 
@@ -376,7 +380,7 @@ public class cotizacion_Fragment extends Fragment {
                 System.out.println("ON SUCCESS");
                 if(statusCode == 200){
                     ListaVehiculos(new String (responseBody));
-                    ListarIDVehiculos(new String (responseBody));
+                    //ListarIDVehiculos(new String (responseBody));
                 }
             }
 
@@ -401,6 +405,18 @@ public class cotizacion_Fragment extends Fragment {
             adp = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, lista);
             sp_vehiculos.setAdapter(adp);
 
+            sp_vehiculos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ItemVehiculo = (String) sp_vehiculos.getAdapter().getItem(position).toString();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
         }
         catch (Exception e1){
             e1.printStackTrace();
@@ -414,6 +430,8 @@ public class cotizacion_Fragment extends Fragment {
             JSONArray jsonArreglo = new JSONArray(URL);
             for(int i=0; i<jsonArreglo.length(); i++){
                 iddevehiculo[i] = jsonArreglo.getJSONObject(i).getString("idvehi");
+                vehiculo = jsonArreglo.getJSONObject(i).getString("marcamodelo");
+                System.out.println("VEHICULO: "+vehiculo);
             }
         }
         catch (Exception e1){
@@ -461,7 +479,6 @@ public class cotizacion_Fragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     ItemServicios = (String) sp_servicios.getAdapter().getItem(position).toString();   // El elemento seleccionado del Spinner
-                    System.out.println("SPINNER AÑO"+ItemServicios);
                 }
 
                 @Override
@@ -614,7 +631,7 @@ public class cotizacion_Fragment extends Fragment {
                 Map<String,String> parametros=new HashMap<String,String>();
                 String FechaHora= txtFecha.getText().toString()+" "+txtHora.getText().toString()+":00";
 
-                parametros.put("vehiculo", IdVehiculoBD);
+                parametros.put("vehiculo", ItemVehiculo);
                 parametros.put("servicio", ItemServicios);
                 parametros.put("ubicacion", ItemUbicacion);
                 parametros.put("fecha", FechaHora);
