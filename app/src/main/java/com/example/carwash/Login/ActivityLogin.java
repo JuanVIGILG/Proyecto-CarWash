@@ -80,10 +80,12 @@ public class ActivityLogin extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
+
+                                //Validar la Persistencia de datos
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
+
+
                                 //Metodo para ir a la pantalla Principal
-
-
                                 if(!user.isEmailVerified()){
                                     ///si user devuelve un valor false, enviamos un mensaje al usuario con un Toast
                                     //donde le coomunicamos que todavia no ha ido a verificar su correo con el enlace que le enviamos
@@ -108,18 +110,20 @@ public class ActivityLogin extends AppCompatActivity {
         });
     }
 
+    // Limpiar cajas de texto
     private void clean() {
         txtCorreo.setText("");
         txtContrasenia.setText("");
     }
 
+    // Iniciar la app e ir a inicio
     private void Inicio(){
         Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("mail",txtCorreo.getText().toString());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
 
+    // Posibles errores del AwesomeValidation
     private void dameToastdeError(String error) {
 
         switch (error) {
@@ -201,6 +205,7 @@ public class ActivityLogin extends AppCompatActivity {
 
     }
 
+    // Ir a inicio si encuentra sesion activa
     protected void onStart() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if(user!=null){ //si no es null el usuario ya esta logueado

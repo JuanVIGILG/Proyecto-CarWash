@@ -152,11 +152,8 @@ public class PerfilVehiculoFragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             view.setSelected(true);
-                            //Id_Vehiculo = String.valueOf(position);
                             SelectedRow = true;
                             IdVehiculoBD = iddevehiculo[position];
-                            Toast.makeText(getContext(), "Id De este es: "+IdVehiculoBD, Toast.LENGTH_SHORT).show();
-                            System.out.println("IdVehiculoBD"+IdVehiculoBD);
                         }
                     });
                 }
@@ -191,11 +188,12 @@ public class PerfilVehiculoFragment extends Fragment {
                 }
             });
         }
+
+        // BOTON ELIMINAR
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "ELIMINAR: El Id Seleccionado es: "+IdVehiculoBD, Toast.LENGTH_SHORT).show();
-                System.out.println("IDVEHI EN ELIMINAR: "+IdVehiculoBD);
+
                 if(SelectedRow==false){
                     Toast.makeText(getContext(), "Seleccione un Vehiculo para eliminar", Toast.LENGTH_SHORT).show();
                 }
@@ -209,25 +207,7 @@ public class PerfilVehiculoFragment extends Fragment {
                         public void onClick(DialogInterface dialogInterface, int i) {
 
                             eliminar();
-
-                            /*swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                                @Override
-                                public void onRefresh() {
-
-                                }
-                            });*/
-
-                            //Refresh main activity upon close of dialog box
-                            // Intent refresh = new Intent(this, clsMainUIActivity.class);
-                            // startActivity(refresh);
-                            // this.finish();
-
-                            /*public void onClick (View v){
-                                Intent intent = getIntent();
-                                finish();
-                                startActivity(intent); }*/
-
-
+                            getActivity().finish(); // FINALIZAR ACTIVIDAD E IR A INICIO
                         }
                     });
 
@@ -249,6 +229,7 @@ public class PerfilVehiculoFragment extends Fragment {
 
     }
 
+    // OBTENER UID DEL USUARIO EN FIREBASE
     private void GetUser() {
 
         mAuth = FirebaseAuth.getInstance();            // Iniciar Firebase
@@ -259,7 +240,7 @@ public class PerfilVehiculoFragment extends Fragment {
             if (user != null) {
                 uid = user.getUid(); // Obtener el UID del Usuario Actual
                 SearchUID("https://sitiosweb2021.000webhostapp.com/Carwash/consultarCliente.php?uid='"+uid+"'");
-                System.out.println("UID: "+uid);
+
             }
         }
         catch (Exception e) {
@@ -267,6 +248,7 @@ public class PerfilVehiculoFragment extends Fragment {
         }
     }
 
+    // BUSCAR UID DEL USUARIO EN BD
     private void SearchUID(String URL) {
         JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -277,9 +259,7 @@ public class PerfilVehiculoFragment extends Fragment {
                     try {
                         jsonObject = response.getJSONObject(i);
                         idUser = jsonObject.getInt("id_users");
-                        System.out.println("IDUSERS"+idUser);
                         iduser = String.valueOf(idUser);
-                        System.out.println("IDUSER STRING"+iduser);
                         URLVehicle = "https://sitiosweb2021.000webhostapp.com/Carwash/consultarVehiculo.php?iduser="+iduser;
                     } catch (JSONException e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -297,6 +277,7 @@ public class PerfilVehiculoFragment extends Fragment {
         requestQueue.add(jsonArrayRequest);
     }
 
+    // OBTENER VEHICULOS DEL USUARIO ACTUAL
     public void ObtenerVehiculos() {
 
         http.post(URLVehicle, new AsyncHttpResponseHandler() {
@@ -315,6 +296,7 @@ public class PerfilVehiculoFragment extends Fragment {
         });
     }
 
+    // OBTENER LA LISTA DE VEHICULOS DE LA BD
     private void ListaVehiculos(String URL){
         lista = new ArrayList<Spinners>();
         try {
@@ -333,6 +315,7 @@ public class PerfilVehiculoFragment extends Fragment {
         }
     }
 
+    // OBTENER EL ID DE LOS VEHICULOS EN UN ARREGLO PARA LA POSICION
     private void ListarIDVehiculos(String URL){
         try {
 
@@ -346,6 +329,7 @@ public class PerfilVehiculoFragment extends Fragment {
         }
     }
 
+    // METODO PARA ELIMINAR VEHICULO DE LA BD
     private void eliminar(){
         System.out.println("ANTES DE LA CONVERSION "+IdVehiculoBD);
         String url = "https://sitiosweb2021.000webhostapp.com/Carwash/eliminar.php";

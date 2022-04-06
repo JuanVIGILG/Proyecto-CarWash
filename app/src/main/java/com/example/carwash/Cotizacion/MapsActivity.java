@@ -35,7 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        id  = getIntent().getExtras().getInt("opcion");
+        id  = getIntent().getExtras().getInt("opcion");//obtener la eleccion del tipo de ubicacion
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -57,15 +57,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -82,28 +73,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onLocationChanged(@NonNull Location location) {
                 LatLng miUbicacion = new LatLng(location.getLatitude(), location.getLongitude());
 
-                //Intent i = new Intent(getApplicationContext(), CotizacionFragment.class);
 
                 if(id==0){
                     miUbicacion = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.addMarker(new MarkerOptions().position(miUbicacion).title("Ubicacion Actual"));
 
-                    //i.putExtra("latitud",location.getLatitude());
-                    //i.putExtra("longitud", location.getLongitude());
-
                 }else if (id==1){
                     miUbicacion = new LatLng(13.3090208, -87.1894282);
                     mMap.addMarker(new MarkerOptions().position(miUbicacion).title("Catracho Carwash"));
-
-                    //i.putExtra("latitud", 13.310767);
-                    //i.putExtra("longitud", -87.178477);
 
                 }
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(miUbicacion));
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(miUbicacion).zoom(15).bearing(90).tilt(45).build();
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                //startActivity(i);
             }
 
             @Override
@@ -123,10 +106,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         };
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
-        /*
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
     }
 }

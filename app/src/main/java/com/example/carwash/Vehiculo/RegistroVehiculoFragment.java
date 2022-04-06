@@ -113,42 +113,30 @@ public class RegistroVehiculoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_registro_automovil, container, false);
+
         View view = inflater.inflate(R.layout.fragment_registro_automovil, container, false);
 
-        /*slideshowViewModel =
-                new ViewModelProvider(this).get(SlideShowViewModel.class);
-
-        binding = FragmentRegistroAutomovilBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();*/
-
-        System.out.println("INICIANDO");
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
             http = new AsyncHttpClient();
-            System.out.println("HOLAAAAAA, SI ENTRAAAA");
-            // Elementos del diseño de Spinners
-            spmarca = (Spinner) view.findViewById(R.id.sp_model); //Elemento del Spinner de Marca y modelo
-            sp_anio = (Spinner)view.findViewById(R.id.sp_anio); //Elemento del Spinner de Años
-            sptipoaceite = (Spinner)view.findViewById(R.id.sp_taceite); //Elemento del Spinner de Tipo de Aceite
+
+            spmarca = (Spinner) view.findViewById(R.id.sp_model);
+            sp_anio = (Spinner)view.findViewById(R.id.sp_anio);
+            sptipoaceite = (Spinner)view.findViewById(R.id.sp_taceite);
 
             btnguardar = (Button)view.findViewById(R.id.btnAgg);
 
             rq = Volley.newRequestQueue(getContext());
 
             ObtenerMarcas_Modelos();   // Lista de Modelos en Spinner Marca y modelo
-            ObtenerAnio();
-            //ObtenerAnio2();// Lista de Año en Spinner Años
+            ObtenerAnio(); // Lista de Año en Spinner Años
             ObtenerAceites();   // Lista de Aceites en Spinner Tipo de Aceite
 
             GetUser();          // Obtener ID del usuario en MySQL
-            System.out.println("SPINNER AÑO"+sp_anio);
-            System.out.println("SPINNER ACEITE"+sptipoaceite);
-            System.out.println("SPINNER MODELO"+spmarca);
+
             btnguardar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -184,6 +172,7 @@ public class RegistroVehiculoFragment extends Fragment {
         return view;
     }
 
+    // OBTENER LA LISTA DE MODELOS DE LA BD
     private void ListaModelos(String URL){
         ArrayList<Spinners> lista = new ArrayList<Spinners>();
         try {
@@ -203,7 +192,6 @@ public class RegistroVehiculoFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     ItemMarcaModelo = (String) spmarca.getAdapter().getItem(position).toString();   // El elemento seleccionado del Spinner
-                    System.out.println("SPINNER MARCA"+ItemMarcaModelo);
                 }
 
                 @Override
@@ -217,6 +205,7 @@ public class RegistroVehiculoFragment extends Fragment {
         }
     }
 
+    // OBTENER MARCAS DE LA BD
     public void ObtenerMarcas_Modelos() {
         String URL = RestApi.ApiPostMarcaModelo;    // URL de recurso PHP
 
@@ -236,6 +225,7 @@ public class RegistroVehiculoFragment extends Fragment {
         });
     }
 
+    // OBTENER Y LISTAR AÑOS
     public void ObtenerAnio() {
 
         try {
@@ -255,7 +245,6 @@ public class RegistroVehiculoFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     ItemAnio = (String) sp_anio.getAdapter().getItem(position).toString();   // El elemento seleccionado del Spinner
-                    System.out.println("SPINNER AÑO"+ItemAnio);
                 }
 
                 @Override
@@ -269,6 +258,7 @@ public class RegistroVehiculoFragment extends Fragment {
         }
     }
 
+    // OBTENER LA LISTA DE MODELOS DE LA BD
     private void ListaAceites(String URL){
         ArrayList<Spinners> lista = new ArrayList<Spinners>();
         try {
@@ -288,7 +278,6 @@ public class RegistroVehiculoFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     ItemTAceite = (String) sptipoaceite.getAdapter().getItem(position).toString();   // El elemento seleccionado del Spinner
-                    System.out.println("SPINNER ACEITE"+ItemTAceite);
                 }
 
                 @Override
@@ -302,6 +291,7 @@ public class RegistroVehiculoFragment extends Fragment {
         }
     }
 
+    // OBTENER TIPOS DE ACEITE DE LA BD
     public void ObtenerAceites() {
         String URL = RestApi.ApiPostAceite;   // URL de recurso PHP
 
@@ -320,6 +310,7 @@ public class RegistroVehiculoFragment extends Fragment {
         });
     }
 
+    // OBTENER UID DEL USUARIO EN FIREBASE
     private void GetUser() {
         mAuth = FirebaseAuth.getInstance();            // Iniciar Firebase
         FirebaseUser user = mAuth.getCurrentUser();     // Obtener Usuario Actual
@@ -328,7 +319,6 @@ public class RegistroVehiculoFragment extends Fragment {
         try {
             if (user != null) {
                 uid = user.getUid(); // Obtener el UID del Usuario Actual
-                System.out.println("UID ANTES DE SEARCH"+uid);
                 SearchUID("https://sitiosweb2021.000webhostapp.com/Carwash/consultarCliente.php?uid='"+uid+"'");
                 System.out.println("UID"+uid);
             }
@@ -338,21 +328,17 @@ public class RegistroVehiculoFragment extends Fragment {
         }
     }
 
+    // BUSCAR UID DEL USUARIO EN BD
     private void SearchUID(String URL) {
-        System.out.println("SEARCHUID");
         JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                System.out.println("ON RESPONSE SEARCH UID");
                 JSONObject jsonObject = null;
                 for (int i = 0; i < response.length(); i++) {
                     try {
-                        System.out.println("TRY SEARCH UID");
                         jsonObject = response.getJSONObject(i);
                         idUser = jsonObject.getInt("id_users");
-                        System.out.println("IDUSERS"+idUser);
                         id_usuario = String.valueOf(idUser);
-                        System.out.println("IDUSER STRING"+id_usuario);
                     } catch (JSONException e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -369,6 +355,7 @@ public class RegistroVehiculoFragment extends Fragment {
         requestQueue.add(jsonArrayRequest);
     }
 
+    // GUARDAR VEHICULO EN LA BASE DE DATOS
     private void InsertarVehiculo() {
 
         String url = RestApi.ApiPostCrearVehiculo;    // URL del RestAPI
@@ -386,11 +373,6 @@ public class RegistroVehiculoFragment extends Fragment {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
-                System.out.println("MARCA"+ItemMarcaModelo);
-                System.out.println("AÑO"+ItemAnio);
-                System.out.println("ACEITE"+ItemTAceite);
-                System.out.println("IDUSER"+id_usuario);
 
                 HashMap<String, String> parametros = new HashMap<String, String>();
                 parametros.put("marcamodelo", ItemMarcaModelo);

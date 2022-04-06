@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
+    //ASIGNAR FRAGMENTOS A CADA ITEM DE LA NAVEGACION
    @Override
     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
         int id = item.getItemId();

@@ -121,13 +121,10 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
-                                //Toast.makeText(ActivityRegistrarUsuario.this, "USUARIO CREADO CON ÉXITO", Toast.LENGTH_SHORT).show();
-                                //finish();
 
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 user.sendEmailVerification();
                                 InsertEmail();
-                                //insertData();
                                 onCreateDialog();
                                 CleanScreen();
                             }else{
@@ -143,6 +140,7 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         });
     }
 
+    // VALIDAR CAMPOS VACIOS
     public boolean validar(){
         retorno= true;
 
@@ -166,6 +164,7 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         return retorno;
     }
 
+    // POSIBLES ERRORES DEL AWESOMEVALIDATION
     private void dameToastdeError(String error) {
 
         switch (error) {
@@ -247,6 +246,7 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
 
     }
 
+    // OBTENER UID DEL FIREBASE
     private void GetUID() {
 
         firebaseAuth = FirebaseAuth.getInstance(); // Iniciar Firebase
@@ -263,6 +263,7 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         }
     }
 
+    // INSERTAR DATOS EN LA BD
     private void InsertEmail() {
 
         GetUID();   // Obtener funcion UID para almacenarlo
@@ -311,6 +312,7 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+    // CUADRO DE DIALOGO PARA LA VERIFICACION DEL EMAIL
     private void onCreateDialog() {
 
         String mail= txtEmail.getText().toString();
@@ -329,6 +331,7 @@ public class ActivityRegistrarUsuario extends AppCompatActivity {
         titulo.show();
     }
 
+    // LIMPIAR CAJAS DE TEXTO
     private void CleanScreen() {
         txtNom.setText("");
         txtApellido.setText("");
